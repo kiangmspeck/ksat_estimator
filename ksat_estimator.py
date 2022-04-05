@@ -1,9 +1,10 @@
-import sys 
+import sys
 print("Welcome to the Ksat Estimator")
 
-n = int(input("Enter the number of samples you would like to estimate:\n"))
+n = input("Enter the number of samples you would like to estimate:\n")
 
-if n > 0:
+if len(n) > 0 and n.isalpha() == False:
+    n = int(n)
     print(f"Enter the oven-dry bulk density values of your {n} samples seperated by a space")
     user_db = input()
     user_db = [float(i) for i in user_db.split()]
@@ -11,30 +12,27 @@ if n > 0:
             user_db = input("Looks like you forgot some values, try again:\n")
             user_db = [float(i) for i in user_db.split()]
     else: print(user_db)
-    
+
 else:
     sys.exit("Invalid entry, please try again")
-    
-if len(user_db) == n:
-    print(f"Now, enter the 33 kPa values of your {n} samples seperated by a space.")
-    user_3kpa = input()
-    user_3kpa = [float(i) for i in user_3kpa.split()]
-    while len(user_3kpa) != n:
+
+
+print(f"Now, enter the 33 kPa values of your {n} samples seperated by a space.")
+user_3kpa = input()
+user_3kpa = [float(i) for i in user_3kpa.split()]
+while len(user_3kpa) != n:
             user_3kpa = input("Looks like you forgot some values, try again:\n")
             user_3kpa = [float(i) for i in user_3kpa.split()]
-    else: print(user_3kpa)
+print(user_3kpa)
 
-else:
-    print("Something went wrong, please try again.")
 
-if len(user_db) == n and len(user_3kpa) == n:
-    print(f"Finally, enter the fragment percentages of your {n} samples seperated by a space")
-    user_frag = input()
-    user_frag = [float(i) for i in user_frag.split()]
-    while len(user_frag) != n:
+print(f"Finally, enter the fragment percentages of your {n} samples seperated by a space")
+user_frag = input()
+user_frag = [float(i) for i in user_frag.split()]
+while len(user_frag) != n:
         user_frag = input("Looks like you forgot some values, try again:\n")
         user_frag = [float(i) for i in user_frag.split()]
-    else: print(user_frag)
+print(user_frag)
 
 print("Ready to calculate!")
 
@@ -69,8 +67,6 @@ frag_rv = [x / 100 for x in user_frag]
 
 kt = [x * ((2 * (1 - y)) / ((2 + y))) for x,y in zip(ksat2,frag_rv)]
 
-
-
 conclass = input("Would you like to convert these into the Ksat revised classes (please respond 'y' or 'n')\n")
 
 if conclass == 'y':
@@ -100,4 +96,3 @@ if conclass == 'y':
 else:
     for i in kt:
         print("Output:",i)
-    
